@@ -4,6 +4,25 @@ A complete, production-grade payment gateway application built with **React**, *
 
 ---
 
+## 📸 Application Screenshots
+
+| **👑 Admin Control Center** | **🏢 Merchant Business Portal** |
+|:---:|:---:|
+| ![Admin Portal](screenshots/01-admin-portal.png) | ![Business Portal](screenshots/02-business-portal.png) |
+| *Platform telemetry, account management, & user roles* | *Gross revenue analytics, payment links, & developer API keys* |
+
+| **⚡ Dynamic UPI QR Checkout** | **👤 Client Personal Portal** |
+|:---:|:---:|
+| ![Dynamic UPI QR Checkout](screenshots/04-dynamic-upi-qr-checkout.png) | ![Client Portal](screenshots/03-client-portal.png) |
+| *Auto-generated NPCI UPI QR for GPay, PhonePe, & Paytm* | *Spending summary, lifetime history, & 2FA protection* |
+
+| **🔐 Secure Authentication & TOTP 2FA** |
+|:---:|
+| ![Authentication & TOTP 2FA](screenshots/05-login-2fa.png) |
+| *Hardware-grade Google Authenticator / Authy two-factor protection* |
+
+---
+
 ## 🏛️ 3 Specialized Portals & Access Control
 
 ### 1. 👤 Client Portal (`/client`)
@@ -178,6 +197,8 @@ npx concurrently --names "SERVER,CLIENT" --prefix-colors "blue,green" "cd server
 ---
 
 ## ⚡ Full Razorpay Backend Model & Standard Checkout Engine
+
+![E-Commerce Checkout Integration](screenshots/04-demo-store-checkout.png)
 
 PayGateway includes a complete, 100% compliant **Razorpay Backend Model** and drop-in **Standard Checkout SDK** (`checkout.js`). Any application, e-commerce plugin (WooCommerce, Shopify, Magento), or custom backend built for Razorpay can drop in this gateway simply by pointing to `http://localhost:5000/v1` and using their merchant Key ID and Secret!
 
