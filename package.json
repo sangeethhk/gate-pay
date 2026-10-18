@@ -1,0 +1,17 @@
+{
+  "name": "your-payment-gateway",
+  "version": "1.0.0",
+  "description": "Full-stack payment gateway with TOTP 2FA authenticator and Stripe",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "migrate": "cd server && npm run migrate",
+    "healthcheck": "cd server && npm run healthcheck",
+    "test": "cd server && npm run test",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

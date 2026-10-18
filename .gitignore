@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Environment files (NEVER commit these)
+.env
+server/.env
+client/.env
+
+# Database
+server/data/
+
+# Build output
+client/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Sound — Real World E-Commerce Store</title>
+  <script src="/v1/checkout.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+    header {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .logo {
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+    }
+    @media(max-width: 768px) {
+      .grid { grid-template-columns: 1fr; padding: 20px; }
+    }
+    .product-img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 20px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+      border: 1px solid #e2e8f0;
+    }
+    .badge {
+      display: inline-block;
+      background: #fee2e2;
+      color: #b91c1c;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 8px;
+      line-height: 1.25;
+    }
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .price {
+      font-size: 32px;
+      font-weight: 900;
+      color: #0f172a;
+    }
+    .original-price {
+      font-size: 18px;
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+    .discount {
+      font-size: 13px;
+      font-weight: 700;
+      color: #16a34a;
+      background: #dcfce7;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .features {
+      list-style: none;
+      margin: 20px 0;
+      font-size: 13px;
+      color: #475569;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .features li::before {
+      content: "✓ ";
+      color: #2563eb;
+      font-weight: bold;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-group input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+    .pay-btn {
+      width: 100%;
+      background: #0c2340;
+      color: #ffffff;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px -5px rgba(12,35,64,0.4);
+      transition: all 0.2s;
+    }
+    .pay-btn:hover {
+      background: #1e3a8a;
+      transform: translateY(-1px);
+    }
+    .security-note {
+      font-size: 11px;
+      color: #64748b;
+      text-align: center;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .mobile-test-banner {
+      background: #e0e7ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .receipt-card {
+      display: none;
+      margin-top: 24px;
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      border-radius: 20px;
+      padding: 24px;
+      animation: fadeIn 0.3s ease-in;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">⚡ Apex Sound</div>
+    <div style="font-size: 12px; color: #94a3b8; display: flex; align-items: center; gap: 8px;">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;"></span>
+      Real-World Razorpay Integration Demo
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="grid">
+      <!-- Product Showcase -->
+      <div>
+        <div class="product-img">
+          🎧
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <div style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:700;">40h Battery</div>
+          <div style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:700;">Active ANC</div>
+          <div style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:700;">Spatial Audio</div>
+        </div>
+      </div>
+
+      <!-- Checkout Form -->
+      <div>
+        <span class="badge">Limited Deal • 62% Off</span>
+        <h1 class="title">Apex Pro Wireless Noise-Cancelling Headphones</h1>
+
+        <div class="price-row">
+          <span class="price">₹1,499</span>
+          <span class="original-price">₹3,999</span>
+          <span class="discount">Save ₹2,500</span>
+        </div>
+
+        <ul class="features">
+          <li>Custom 40mm Beryllium acoustic drivers</li>
+          <li>Hybrid Active Noise Cancellation with Transparency Mode</li>
+          <li>Ultra-soft memory foam ear cushions</li>
+          <li>1 Year Official Apex Warranty included</li>
+        </ul>
+
+        <div style="border-top:1px solid #e2e8f0;padding-top:16px;margin-top:16px;">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="cust-name" value="Rohit Sharma" placeholder="Your Full Name">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="cust-email" value="rohit.sharma@example.com" placeholder="Email for invoice">
+          </div>
+          <div class="form-group">
+            <label>Phone Number (for Delivery SMS)</label>
+            <input type="tel" id="cust-phone" value="+919876543210" placeholder="Mobile Number">
+          </div>
+
+          <button id="pay-button" class="pay-btn" onclick="startRazorpayPayment()">
+            <span>⚡ Pay ₹1,499 with Razorpay</span>
+          </button>
+
+          <div class="security-note">
+            🔒 256-Bit SSL Encrypted • Powered by PayGateway Razorpay Engine
+          </div>
+        </div>
+
+        <!-- Order Success Receipt -->
+        <div id="receipt-box" class="receipt-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:36px;height:36px;background:#22c55e;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;">✓</div>
+            <div>
+              <h3 style="font-size:16px;font-weight:800;color:#14532d;">Payment Confirmed!</h3>
+              <p style="font-size:11px;color:#166534;">Your order is being processed for dispatch</p>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:12px;font-family:monospace;font-size:11px;line-height:1.7;color:#334155;border:1px solid #bbf7d0;">
+            <div><strong>Order ID:</strong> <span id="rec-order"></span></div>
+            <div><strong>Payment ID:</strong> <span id="rec-pay" style="color:#0284c7;font-weight:bold;"></span></div>
+            <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><strong>HMAC Signature:</strong> <span id="rec-sig" style="color:#6d28d9;"></span></div>
+            <div><strong>Amount Paid:</strong> ₹1,499.00 (Inclusive of GST)</div>
+            <div><strong>Status:</strong> <span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:4px;font-weight:bold;">CAPTURED</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Real-World Test Card -->
+    <div class="mobile-test-banner">
+      <div>
+        <h4 style="font-size:14px;font-weight:800;color:#312e81;">📱 Test on Your Smartphone / Real World Device</h4>
+        <p style="font-size:12px;color:#4338ca;margin-top:2px;">
+          Scan the QR code or open <strong>http://192.168.29.165:5000/demo</strong> on your phone connected to Wi-Fi to test mobile checkout!
+        </p>
+      </div>
+      <div id="mobile-qr-wrap" style="background:#fff;padding:6px;border-radius:12px;border:1px solid #c7d2fe;box-shadow:0 2px 6px rgba(0,0,0,0.05);flex-shrink:0;">
+        <img id="mobile-url-qr" src="" alt="Mobile URL QR" style="width:72px;height:72px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var merchantConfig = null;
+
+    // Load merchant key dynamically
+    fetch('/v1/demo-config')
+      .then(function(r) { return r.json(); })
+      .then(function(cfg) {
+        merchantConfig = cfg;
+        console.log('Loaded merchant config:', cfg);
+      });
+
+    // Generate mobile URL QR code
+    var mobileUrl = 'http://192.168.29.165:5000/demo';
+    document.getElementById('mobile-url-qr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(mobileUrl);
+
+    function startRazorpayPayment() {
+      var btn = document.getElementById('pay-button');
+      btn.innerText = 'Creating Order...';
+      btn.disabled = true;
+
+      var name = document.getElementById('cust-name').value;
+      var email = document.getElementById('cust-email').value;
+      var phone = document.getElementById('cust-phone').value;
+
+      // 1. Create order on server using Razorpay Orders API
+      fetch('/v1/demo/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: 149900, // ₹1,499.00 in paise
+          currency: 'INR',
+          receipt: 'APEX_' + Date.now(),
+          notes: {
+            item: 'Apex Pro Wireless ANC Headphones',
+            customer: name,
+            email: email,
+            phone: phone
+          }
+        })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(order) {
+        btn.innerText = '⚡ Pay ₹1,499 with Razorpay';
+        btn.disabled = false;
+
+        if (!order.id) {
+          alert(order.error ? order.error.description : 'Failed to create order');
+          return;
+        }
+
+        // 2. Open standard Razorpay Checkout Modal
+        var options = {
+          key: merchantConfig ? merchantConfig.keyId : 'rzp_live_6c9f7ddd33bbc4',
+          amount: order.amount,
+          currency: order.currency,
+          name: 'Apex Sound Store',
+          description: 'Apex Pro Wireless Headphones',
+          order_id: order.id,
+          handler: function (response) {
+            console.log('Payment successful! Response:', response);
+            // Show digital receipt
+            document.getElementById('receipt-box').style.display = 'block';
+            document.getElementById('rec-order').innerText = response.razorpay_order_id;
+            document.getElementById('rec-pay').innerText = response.razorpay_payment_id;
+            document.getElementById('rec-sig').innerText = response.razorpay_signature;
+
+            // Scroll down to receipt
+            document.getElementById('receipt-box').scrollIntoView({ behavior: 'smooth' });
+          },
+          prefill: {
+            name: name,
+            email: email,
+            contact: phone
+          },
+          theme: { color: '#0c2340' }
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.open();
+      })
+      .catch(function(err) {
+        btn.innerText = '⚡ Pay ₹1,499 with Razorpay';
+        btn.disabled = false;
+        alert('Server connection error. Ensure backend is running.');
+      });
+    }
+  </script>
+</body>
+</html>
