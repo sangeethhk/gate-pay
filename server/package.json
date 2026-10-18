@@ -11,7 +11,8 @@
     "healthcheck": "node scripts/healthcheck.js",
     "test": "node tests/test_razorpay_flow.js",
     "test:api": "node tests/test_api_flow.js",
-    "backfill": "node scripts/backfill_rzp.js"
+    "backfill": "node scripts/backfill_rzp.js",
+    "build": "node migrate.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -1,0 +1,38 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Render.com Blueprint (Infrastructure-as-Code)
+# Documentation: https://render.com/docs/blueprint-spec
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  # ─── PayGateway Backend Web Service ─────────────────────────────────────────
+  - type: web
+    name: paygateway-backend
+    runtime: node
+    plan: free
+    region: oregon # or singapore, frankfurt, ohio
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_SSL
+        value: "true"
+      # Paste your Supabase connection string in the Render Dashboard
+      - key: DATABASE_URL
+        sync: false
+      # High-entropy random secrets generated automatically by Render
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_PREAUTH_SECRET
+        generateValue: true
+      # Set to your frontend client URL (e.g. https://your-app.vercel.app or *)
+      - key: CLIENT_ORIGIN
+        value: "*"
+      # Optional: Test Stripe Key if using card processing
+      - key: STRIPE_SECRET_KEY
+        sync: false

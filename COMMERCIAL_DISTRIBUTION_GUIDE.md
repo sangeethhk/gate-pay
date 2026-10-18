@@ -313,6 +313,17 @@ server {
 }
 ```
 
+### Deployment Option C: Render.com (1-Click Blueprint or Web Service)
+1. Push this repository to GitHub or GitLab.
+2. In [Render Dashboard](https://dashboard.render.com), click **New +** > **Blueprint**.
+3. Connect your repository — Render automatically detects `render.yaml`, preconfiguring:
+   - **Root Directory:** `server`
+   - **Build Command:** `npm install && npm run build` (auto-runs migrations)
+   - **Start Command:** `npm start`
+   - **Health Check Path:** `/api/health`
+4. Set your `DATABASE_URL` in the Render Environment Variables tab (using your Supabase or managed Postgres connection string).
+5. Click **Apply** — Render will build and deploy the backend with free SSL at `https://<service-name>.onrender.com`.
+
 ---
 
 ## 8. White-Label Customization & Brand Configuration

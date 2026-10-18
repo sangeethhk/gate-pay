@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import api from '../api/axios';
+import api, { BACKEND_URL } from '../api/axios';
 import Navbar from '../components/Navbar';
 
 const STATUS_BADGE = {
@@ -79,7 +79,7 @@ export default function BusinessPortal() {
     if (!document.getElementById('rzp-checkout-script')) {
       const script = document.createElement('script');
       script.id = 'rzp-checkout-script';
-      script.src = 'http://localhost:5000/v1/checkout.js';
+      script.src = `${BACKEND_URL}/v1/checkout.js`;
       script.async = true;
       document.body.appendChild(script);
     }
@@ -132,7 +132,7 @@ export default function BusinessPortal() {
     try {
       const toastId = toast.loading('Creating Razorpay order on server...');
       const basicAuth = btoa(`${profile.rzp_key_id}:${profile.rzp_key_secret}`);
-      const orderRes = await fetch('http://localhost:5000/v1/orders', {
+      const orderRes = await fetch(`${BACKEND_URL}/v1/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ export default function BusinessPortal() {
   const handleVerifySignature = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/v1/signature/verify', {
+      const res = await fetch(`${BACKEND_URL}/v1/signature/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -788,7 +788,7 @@ export default function BusinessPortal() {
                 <div>
                   <span className="font-semibold text-gray-700">API Endpoint Base:</span>{' '}
                   <code className="bg-gray-100 px-2 py-0.5 rounded font-mono text-indigo-600">
-                    http://localhost:5000/api/v1
+                    {BACKEND_URL}/api/v1
                   </code>
                 </div>
                 <div>
@@ -842,7 +842,7 @@ export default function BusinessPortal() {
                   <div className="relative">
                     <pre className="bg-slate-900 text-slate-100 rounded-2xl p-4 text-xs font-mono overflow-x-auto">
 {`<!-- 1. Include PayGateway JavaScript SDK -->
-<script src="http://localhost:5000/sdk/paygateway.js"></script>
+<script src="${BACKEND_URL}/sdk/paygateway.js"></script>
 
 <!-- 2. Pay Button (Triggers UPI QR & Card Checkout) -->
 <button onclick="payWithPayGateway()" style="padding:12px 24px;background:#4f46e5;color:#fff;border-radius:12px;border:none;font-weight:bold;cursor:pointer;">
@@ -886,7 +886,7 @@ function payWithPayGateway() {
                   <div className="relative">
                     <pre className="bg-slate-900 text-slate-100 rounded-2xl p-4 text-xs font-mono overflow-x-auto">
 {`// server.js (Node.js backend)
-const response = await fetch("http://localhost:5000/api/v1/checkout/sessions", {
+const response = await fetch("${BACKEND_URL}/api/v1/checkout/sessions", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -927,7 +927,7 @@ console.log("UPI Intent URI:", session.upiIntentUri);`}
                   </p>
                   <div className="relative">
                     <pre className="bg-slate-900 text-slate-100 rounded-2xl p-4 text-xs font-mono overflow-x-auto">
-{`curl -X POST http://localhost:5000/api/v1/checkout/sessions \\
+{`curl -X POST ${BACKEND_URL}/api/v1/checkout/sessions \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: ${profile?.api_key || 'pg_live_your_api_key'}" \\
   -d '{
