@@ -908,7 +908,7 @@ console.log("UPI Intent URI:", session.upiIntentUri);`}
                     </pre>
                     <button
                       onClick={() => {
-                        navigator.clipboard.writeText(`const res = await fetch("http://localhost:5000/api/v1/checkout/sessions", {\n  method: "POST",\n  headers: { "Content-Type": "application/json", "x-api-key": "${profile?.api_key}" },\n  body: JSON.stringify({ amount: 50000, currency: "inr", orderId: "ORD_123" })\n});\nconst data = await res.json();\nconsole.log(data.checkoutUrl);`);
+                        navigator.clipboard.writeText(`const res = await fetch("${BACKEND_URL}/api/v1/checkout/sessions", {\n  method: "POST",\n  headers: { "Content-Type": "application/json", "x-api-key": "${profile?.api_key}" },\n  body: JSON.stringify({ amount: 50000, currency: "inr", orderId: "ORD_123" })\n});\nconst data = await res.json();\nconsole.log(data.checkoutUrl);`);
                         toast.success('Node.js code copied!');
                       }}
                       className="absolute top-3 right-3 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg"
@@ -939,7 +939,7 @@ console.log("UPI Intent URI:", session.upiIntentUri);`}
                     </pre>
                     <button
                       onClick={() => {
-                        navigator.clipboard.writeText(`curl -X POST http://localhost:5000/api/v1/checkout/sessions -H "Content-Type: application/json" -H "x-api-key: ${profile?.api_key}" -d '{"amount": 25000, "currency": "inr", "orderId": "TEST_01"}'`);
+                        navigator.clipboard.writeText(`curl -X POST ${BACKEND_URL}/api/v1/checkout/sessions -H "Content-Type: application/json" -H "x-api-key: ${profile?.api_key}" -d '{"amount": 25000, "currency": "inr", "orderId": "TEST_01"}'`);
                         toast.success('cURL command copied!');
                       }}
                       className="absolute top-3 right-3 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg"
